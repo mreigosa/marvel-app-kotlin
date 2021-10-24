@@ -1,19 +1,19 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
 }
 
 android {
-    compileSdk rootProject.compileSdk
+    compileSdk 31
 
     defaultConfig {
-        applicationId "com.mreigosa.marvelapp"
-        minSdk rootProject.minSdk
-        targetSdk rootProject.targetSdk
-        versionCode rootProject.versionCode
-        versionName rootProject.versionName
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,20 +33,10 @@ android {
 
 dependencies {
 
-    implementation project(':presentation')
-    implementation project(':domain')
-    implementation project(':data')
-
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-
-    implementation "io.insert-koin:koin-android:$koin_version"
-
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
-
 }
