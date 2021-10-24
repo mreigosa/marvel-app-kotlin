@@ -45,4 +45,5 @@ dependencies {
     testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     testImplementation "org.assertj:assertj-core:$assertj_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
 }

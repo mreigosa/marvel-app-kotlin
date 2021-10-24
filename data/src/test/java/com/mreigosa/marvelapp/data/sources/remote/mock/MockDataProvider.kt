@@ -2,6 +2,10 @@ package com.mreigosa.marvelapp.data.sources.remote.mock
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.mreigosa.marvelapp.data.model.MarvelCharacterEntity
+import com.mreigosa.marvelapp.data.sources.remote.mapper.MarvelCharacterRemoteEntityMapper
+import com.mreigosa.marvelapp.data.sources.remote.model.MarvelCharacterDataWrapper
+import com.mreigosa.marvelapp.data.sources.remote.model.MarvelCharacterRemoteEntity
 
 object MockDataProvider {
 
@@ -9,6 +13,15 @@ object MockDataProvider {
 
     const val GET_CHARACTERS_RESPONSE_FILE = "getCharactersApiResponse.json"
     const val MOCK_EMPTY_CHARACTERS_JSON_FILENAME = "getCharactersEmptyApiResponse.json"
+
+    fun givenMarvelCharacterEntityList(): List<MarvelCharacterEntity> {
+        val remoteEntities =
+            parseJsonFile<MarvelCharacterDataWrapper>(GET_CHARACTERS_RESPONSE_FILE).data?.results
+
+        return remoteEntities?.map {
+            MarvelCharacterRemoteEntityMapper.mapFromRemote(it)
+        } ?: listOf()
+    }
 
     fun readJsonAsString(path: String): String {
         val stream = this.javaClass.classLoader?.getResourceAsStream(path) ?: return ""
