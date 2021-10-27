@@ -7,12 +7,9 @@ import com.mreigosa.marvelapp.domain.executor.UseCaseInvoker
 import com.mreigosa.marvelapp.domain.usecase.GetCharactersUseCase
 import org.koin.dsl.module
 
-object DomainModules {
+val domainModule = module {
+    factory<Invoker> { UseCaseInvoker(get()) }
+    single<DispatcherProvider> { DispatcherProviderImpl() }
 
-    val useCaseModule = module {
-        factory<Invoker> { UseCaseInvoker(get()) }
-        single<DispatcherProvider> { DispatcherProviderImpl() }
-
-        factory { GetCharactersUseCase(get()) }
-    }
+    factory { GetCharactersUseCase(get()) }
 }
