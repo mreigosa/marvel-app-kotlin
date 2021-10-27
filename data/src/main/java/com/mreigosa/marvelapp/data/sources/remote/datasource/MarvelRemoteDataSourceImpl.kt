@@ -12,7 +12,7 @@ class MarvelRemoteDataSourceImpl(
 ) : MarvelRemoteDataSource {
 
     override fun getCharacters(offset: Int): List<MarvelCharacterEntity> {
-        val response = api.getCharacters(MarvelApi.API_KEY, offset).executeCall()
+        val response = api.getCharacters(offset).executeCall()
         return response?.data?.results?.let {
             it.map { marvelRemoteEntity -> characterMapper.mapFromRemote(marvelRemoteEntity) }
         } ?: throw Exception()

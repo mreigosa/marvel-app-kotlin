@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mreigosa.marvelapp.data.sources.datasource.MarvelRemoteDataSource
 import com.mreigosa.marvelapp.data.sources.remote.api.MarvelApi
+import com.mreigosa.marvelapp.data.sources.remote.api.MarvelHeaderInterceptor
 import com.mreigosa.marvelapp.data.sources.remote.datasource.MarvelRemoteDataSourceImpl
 import com.mreigosa.marvelapp.data.sources.remote.mapper.MarvelCharacterRemoteEntityMapper
 import okhttp3.OkHttpClient
@@ -13,12 +14,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val remoteModule = module {
+val remoteModule = provideNetworkModule(baseUrl = MarvelApi.BASE_URL)
+
+val dataSourceModule = module{
     factory<MarvelRemoteDataSource> {
         MarvelRemoteDataSourceImpl(get(), MarvelCharacterRemoteEntityMapper)
     }
-
-    provideNetworkModule(MarvelApi.BASE_URL)
 }
 
 fun provideNetworkModule(baseUrl: String) = module {
@@ -38,6 +39,7 @@ private fun provideOkHttpClient(): OkHttpClient {
         .connectTimeout(30L, TimeUnit.SECONDS)
         .readTimeout(30L, TimeUnit.SECONDS)
         .addInterceptor(httpLoggingInterceptor)
+        .addInterceptor(MarvelHeaderInterceptor())
         .build()
 }
 

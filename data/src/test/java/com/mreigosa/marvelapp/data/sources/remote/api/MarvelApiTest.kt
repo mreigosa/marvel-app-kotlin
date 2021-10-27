@@ -14,7 +14,7 @@ class MarvelApiTest : BaseApiTest() {
     fun `given success response, characters are retrieved`() {
         mockHttpResponse(mockServer, GET_CHARACTERS_RESPONSE_FILE, HttpURLConnection.HTTP_OK)
 
-        val response = api.getCharacters("mock_key", 0).executeCall()
+        val response = api.getCharacters(0).executeCall()
 
         assertNotNull(response)
         with(response) {
@@ -29,6 +29,6 @@ class MarvelApiTest : BaseApiTest() {
     fun `given server error, exception is thrown`() {
         mockHttpResponseCode(mockServer, HttpURLConnection.HTTP_INTERNAL_ERROR)
 
-        api.getCharacters("mock_key", 0).executeCall()
+        api.getCharacters(0).executeCall()
     }
 }
