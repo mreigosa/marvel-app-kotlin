@@ -3,6 +3,10 @@ plugins {
     id 'kotlin-android'
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdk rootProject.compileSdk
 
@@ -14,6 +18,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField("String", "MARVEL_API_KEY", apikeyProperties['API_KEY'])
+        buildConfigField("String", "MARVEL_API_SECRET", apikeyProperties['API_SECRET'])
     }
 
     buildTypes {
