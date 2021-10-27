@@ -1,6 +1,8 @@
 package com.mreigosa.marvelapp.data.sources.remote.mapper
 
 import com.mreigosa.marvelapp.data.model.MarvelCharacterEntity
+import com.mreigosa.marvelapp.data.sources.remote.forceHttps
+import com.mreigosa.marvelapp.data.sources.remote.mapper.MarvelCharacterRemoteEntityMapper.IMAGE_VARIANT
 import com.mreigosa.marvelapp.data.sources.remote.model.MarvelCharacterRemoteEntity
 import com.mreigosa.marvelapp.data.sources.remote.model.Thumbnail
 import org.assertj.core.api.Assertions.assertThat
@@ -19,7 +21,10 @@ class MarvelCharacterRemoteEntityMapperTest {
         assertThat(mappedInstance.name).isEqualTo(remoteEntity.name)
         assertThat(mappedInstance.description).isEqualTo(remoteEntity.description)
 
-        val expectedImage = "${remoteEntity.thumbnail?.path}.${remoteEntity.thumbnail?.extension}"
+        val expectedImage = with(remoteEntity){
+            "${thumbnail?.path}/$IMAGE_VARIANT.${thumbnail?.extension}".forceHttps()
+        }
+
         assertThat(mappedInstance.image).isEqualTo(expectedImage)
     }
 
