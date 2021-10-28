@@ -1,11 +1,10 @@
-package com.mreigosa.marvelapp.data.sources.remote.mock
-
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.mreigosa.marvelapp.data.model.MarvelCharacterEntity
+import com.mreigosa.marvelapp.data.sources.local.mapper.MarvelCharacterLocalEntityMapper
+import com.mreigosa.marvelapp.data.sources.local.model.MarvelCharacterLocalEntity
 import com.mreigosa.marvelapp.data.sources.remote.mapper.MarvelCharacterRemoteEntityMapper
 import com.mreigosa.marvelapp.data.sources.remote.model.MarvelCharacterDataWrapper
-import com.mreigosa.marvelapp.data.sources.remote.model.MarvelCharacterRemoteEntity
 
 object MockDataProvider {
 
@@ -21,6 +20,12 @@ object MockDataProvider {
         return remoteEntities?.map {
             MarvelCharacterRemoteEntityMapper.mapFromRemote(it)
         } ?: listOf()
+    }
+
+    fun givenMarvelCharacterLocalEntityList(): List<MarvelCharacterLocalEntity> {
+        return givenMarvelCharacterEntityList().map {
+            MarvelCharacterLocalEntityMapper.mapToLocal(it)
+        }
     }
 
     fun readJsonAsString(path: String): String {

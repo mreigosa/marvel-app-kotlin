@@ -2,11 +2,10 @@ package com.mreigosa.marvelapp.data.sources.remote.api
 
 import com.mreigosa.marvelapp.data.sources.remote.executeCall
 import com.mreigosa.marvelapp.data.sources.remote.mock.BaseApiTest
-import com.mreigosa.marvelapp.data.sources.remote.mock.MockDataProvider.GET_CHARACTERS_RESPONSE_FILE
+import MockDataProvider.GET_CHARACTERS_RESPONSE_FILE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.net.HttpURLConnection
-import kotlin.test.assertNotNull
 
 class MarvelApiTest : BaseApiTest() {
 
@@ -16,8 +15,8 @@ class MarvelApiTest : BaseApiTest() {
 
         val response = api.getCharacters(0).executeCall()
 
-        assertNotNull(response)
-        with(response) {
+        assertThat(response).isNotNull
+        with(response!!) {
             assertThat(HttpURLConnection.HTTP_OK).isEqualTo(code?.toInt())
             assertThat(data).isNotNull
             assertThat(data?.results).isNotNull

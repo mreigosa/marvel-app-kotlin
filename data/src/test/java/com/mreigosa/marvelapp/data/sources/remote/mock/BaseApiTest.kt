@@ -2,6 +2,7 @@ package com.mreigosa.marvelapp.data.sources.remote.mock
 
 import com.mreigosa.marvelapp.data.di.provideNetworkModule
 import com.mreigosa.marvelapp.data.sources.remote.api.MarvelApi
+import MockDataProvider
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After

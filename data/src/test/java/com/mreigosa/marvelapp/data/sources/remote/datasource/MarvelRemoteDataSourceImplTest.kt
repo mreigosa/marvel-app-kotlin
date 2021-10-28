@@ -2,7 +2,7 @@ package com.mreigosa.marvelapp.data.sources.remote.datasource
 
 import com.mreigosa.marvelapp.data.sources.remote.mapper.MarvelCharacterRemoteEntityMapper
 import com.mreigosa.marvelapp.data.sources.remote.mock.BaseApiTest
-import com.mreigosa.marvelapp.data.sources.remote.mock.MockDataProvider
+import MockDataProvider
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test

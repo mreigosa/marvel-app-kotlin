@@ -4,7 +4,7 @@ import com.mreigosa.marvelapp.data.BuildConfig
 import com.mreigosa.marvelapp.data.sources.remote.executeCall
 import com.mreigosa.marvelapp.data.sources.remote.md5
 import com.mreigosa.marvelapp.data.sources.remote.mock.BaseApiTest
-import com.mreigosa.marvelapp.data.sources.remote.mock.MockDataProvider.GET_CHARACTERS_RESPONSE_FILE
+import MockDataProvider.GET_CHARACTERS_RESPONSE_FILE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.net.HttpURLConnection

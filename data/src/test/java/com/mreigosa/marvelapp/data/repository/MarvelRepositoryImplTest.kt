@@ -2,7 +2,7 @@ package com.mreigosa.marvelapp.data.repository
 
 import com.mreigosa.marvelapp.data.mapper.MarvelCharacterMapper
 import com.mreigosa.marvelapp.data.sources.datasource.MarvelRemoteDataSource
-import com.mreigosa.marvelapp.data.sources.remote.mock.MockDataProvider
+import MockDataProvider
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
