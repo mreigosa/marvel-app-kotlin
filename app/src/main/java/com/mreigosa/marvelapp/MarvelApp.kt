@@ -2,6 +2,7 @@ package com.mreigosa.marvelapp
 
 import android.app.Application
 import com.mreigosa.marvelapp.data.di.dataSourceModule
+import com.mreigosa.marvelapp.data.di.localModule
 import com.mreigosa.marvelapp.data.di.remoteModule
 import com.mreigosa.marvelapp.data.di.repositoryModule
 import com.mreigosa.marvelapp.domain.di.domainModule
@@ -21,6 +22,7 @@ class MarvelApp: Application() {
             modules(
                 remoteModule,
                 dataSourceModule,
+                localModule,
                 repositoryModule,
                 domainModule,
                 presentationModule

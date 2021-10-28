@@ -6,5 +6,5 @@ import com.mreigosa.marvelapp.domain.repository.MarvelRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    factory<MarvelRepository> { MarvelRepositoryImpl(get(), MarvelCharacterMapper) }
+    factory<MarvelRepository> { MarvelRepositoryImpl(get(), get(), MarvelCharacterMapper) }
 }
