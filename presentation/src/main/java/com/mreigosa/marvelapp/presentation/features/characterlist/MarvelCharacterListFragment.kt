@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mreigosa.marvelapp.domain.model.MarvelCharacter
 import com.mreigosa.marvelapp.presentation.databinding.FragmentMarvelCharacterListBinding
+import com.mreigosa.marvelapp.presentation.util.EndlessScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MarvelCharacterListFragment : Fragment() {
@@ -21,6 +23,13 @@ class MarvelCharacterListFragment : Fragment() {
 
     private val charactersAdapter by lazy {
         MarvelCharacterAdapter(listener = ::onCharacterSelected)
+    }
+
+    private val endlessScrollListener by lazy {
+        EndlessScrollListener { totalItems ->
+            charactersAdapter.showLoading()
+            viewModel.fetchCharacters(totalItems)
+        }
     }
 
     override fun onCreateView(
@@ -46,11 +55,15 @@ class MarvelCharacterListFragment : Fragment() {
     private fun initView() {
         binding.characterList.apply {
             adapter = charactersAdapter
+            layoutManager = GridLayoutManager(context, 2).also {
+                it.spanSizeLookup = charactersAdapter.spanSize
+            }
+            addOnScrollListener(endlessScrollListener)
         }
     }
 
     private fun initObservers() {
-        viewModel.characters.observe(viewLifecycleOwner) {
+        viewModel.viewState.observe(viewLifecycleOwner) {
             when (it) {
                 CharacterListViewState.FirstLoading -> showLoading()
                 CharacterListViewState.Error -> showError()
@@ -59,17 +72,18 @@ class MarvelCharacterListFragment : Fragment() {
         }
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
         binding.progressBar.isVisible = true
     }
 
-    private fun hideLoading(){
+    private fun hideLoading() {
         binding.progressBar.isGone = true
     }
 
-    private fun onCharactersLoaded(characters: List<MarvelCharacter>){
+    private fun onCharactersLoaded(characters: List<MarvelCharacter>) {
         hideLoading()
-        charactersAdapter.submitList(characters)
+        endlessScrollListener.setLoaded()
+        charactersAdapter.setItems(characters)
     }
 
     private fun showError() {

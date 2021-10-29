@@ -13,15 +13,17 @@ class MarvelCharacterListViewModel(
     private val invoker: Invoker
 ) : ViewModel() {
 
-    private val _characters = MutableLiveData<CharacterListViewState>()
-    val characters: LiveData<CharacterListViewState> = _characters
+    private val _viewState = MutableLiveData<CharacterListViewState>()
+    val viewState: LiveData<CharacterListViewState> = _viewState
+
+    private val characterList: MutableList<MarvelCharacter> =  mutableListOf()
 
     init {
-        _characters.value = CharacterListViewState.FirstLoading
+        _viewState.value = CharacterListViewState.FirstLoading
         fetchCharacters()
     }
 
-    private fun fetchCharacters(offset: Int = 0) {
+    fun fetchCharacters(offset: Int = 0) {
         invoker.execute(
             viewModelScope,
             getCharactersUseCase withParams GetCharactersUseCase.Params(offset)
@@ -34,10 +36,11 @@ class MarvelCharacterListViewModel(
     }
 
     private fun onCharactersRetrieved(characters: List<MarvelCharacter>) {
-        _characters.value = CharacterListViewState.CharacterListLoaded(characters)
+        characterList.addAll(characters)
+        _viewState.value = CharacterListViewState.CharacterListLoaded(characterList)
     }
 
     private fun onError(error: Throwable) {
-        _characters.value = CharacterListViewState.Error
+        _viewState.value = CharacterListViewState.Error
     }
 }
