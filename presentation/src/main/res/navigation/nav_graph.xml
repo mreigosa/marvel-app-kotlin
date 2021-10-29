@@ -9,5 +9,19 @@
         android:id="@+id/characterList"
         android:name="com.mreigosa.marvelapp.presentation.features.characterlist.MarvelCharacterListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_marvel_character_list"/>
+        tools:layout="@layout/fragment_marvel_character_list">
+
+        <action
+            android:id="@+id/actionToCharacterDetail"
+            app:destination="@id/characterDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.mreigosa.marvelapp.presentation.features.characterdetail.MarvelCharacterDetailFragment"
+        tools:layout="@layout/fragment_marvel_character_detail">
+        <argument
+            android:name="character"
+            app:argType="com.mreigosa.marvelapp.domain.model.MarvelCharacter" />
+    </fragment>
 </navigation>

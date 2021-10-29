@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mreigosa.marvelapp.domain.model.MarvelCharacter
@@ -92,7 +93,9 @@ class MarvelCharacterListFragment : Fragment() {
     }
 
     private fun onCharacterSelected(character: MarvelCharacter) {
-        showSnackBar("${character.name} selected")
+        findNavController().navigate(
+            MarvelCharacterListFragmentDirections.actionToCharacterDetail(character)
+        )
     }
 
     private fun showSnackBar(text: String) {
