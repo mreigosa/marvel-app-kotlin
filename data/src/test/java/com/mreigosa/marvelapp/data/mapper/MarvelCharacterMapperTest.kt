@@ -22,7 +22,7 @@ class MarvelCharacterMapperTest {
 
     companion object {
         private val ANY_MARVEL_CHARACTER = MarvelCharacterEntity(
-            id = 1,
+            id = "1",
             name = "Marvel Hero",
             description = "marvel character description",
             image = "http://i.annihil.us/u/prod/marvel/i/mg/3/80/4c00358ec7548.jpg",

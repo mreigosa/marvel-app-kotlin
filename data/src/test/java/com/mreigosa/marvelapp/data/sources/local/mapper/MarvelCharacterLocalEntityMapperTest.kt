@@ -12,7 +12,7 @@ class MarvelCharacterLocalEntityMapperTest {
     @Test
     fun `that can map a local character entity to data entity`() {
         val localEntity = MarvelCharacterLocalEntity(
-            id = 1,
+            id = "1",
             name = "Marvel Hero",
             description = "marvel character description",
             image = "http://i.annihil.us/u/prod/marvel/i/mg/3/80/4c00358ec7548"
@@ -30,7 +30,7 @@ class MarvelCharacterLocalEntityMapperTest {
     @Test
     fun `that can map a data character entity to local entity`() {
         val dataEntity = MarvelCharacterEntity(
-            id = 1,
+            id = "1",
             name = "Marvel Hero",
             description = "marvel character description",
             image = "http://i.annihil.us/u/prod/marvel/i/mg/3/80/4c00358ec7548"

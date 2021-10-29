@@ -12,7 +12,7 @@ object MarvelCharacterRemoteEntityMapper {
     fun mapFromRemote(remoteEntity: MarvelCharacterRemoteEntity): MarvelCharacterEntity =
         with(remoteEntity) {
             MarvelCharacterEntity(
-                id = id ?: 0,
+                id = id.orEmpty(),
                 name = name.orEmpty(),
                 description = description.orEmpty(),
                 image = thumbnail?.getImageUrl().orEmpty().forceHttps()

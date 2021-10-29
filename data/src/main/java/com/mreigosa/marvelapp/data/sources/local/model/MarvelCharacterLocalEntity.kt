@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "marvel_characters")
 data class MarvelCharacterLocalEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "image") val image: String

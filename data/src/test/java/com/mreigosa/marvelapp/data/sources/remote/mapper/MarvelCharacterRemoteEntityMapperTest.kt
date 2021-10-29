@@ -30,7 +30,7 @@ class MarvelCharacterRemoteEntityMapperTest {
 
     companion object {
         private val ANY_MARVEL_CHARACTER = MarvelCharacterRemoteEntity(
-            id = 1,
+            id = "1",
             name = "Marvel Hero",
             description = "marvel character description",
             thumbnail = Thumbnail(
