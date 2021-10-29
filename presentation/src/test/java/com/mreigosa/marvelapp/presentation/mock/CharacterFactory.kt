@@ -1,9 +1,8 @@
-package com.mreigosa.marvelapp.domain.mock
+package com.mreigosa.marvelapp.presentation.mock
 
 import com.mreigosa.marvelapp.domain.model.MarvelCharacter
 
 object CharacterFactory {
-
     fun createOne(): MarvelCharacter = givenMarvelCharacter()
 
     fun createMany(amount: Int): List<MarvelCharacter> {
