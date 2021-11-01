@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialElevationScale
 import com.mreigosa.marvelapp.domain.model.MarvelCharacter
 import com.mreigosa.marvelapp.presentation.databinding.FragmentMarvelCharacterListBinding
 import com.mreigosa.marvelapp.presentation.util.EndlessScrollListener
@@ -44,6 +47,9 @@ class MarvelCharacterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        binding.characterList.doOnPreDraw { startPostponedEnterTransition() }
+
         initView()
         initObservers()
     }
@@ -92,9 +98,18 @@ class MarvelCharacterListFragment : Fragment() {
         showSnackBar("Something went wrong")
     }
 
-    private fun onCharacterSelected(character: MarvelCharacter) {
+    private fun onCharacterSelected(character: MarvelCharacter, view: View) {
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = 200L
+        }
+
+        reenterTransition = MaterialElevationScale(true).apply {
+            duration = 200L
+        }
+
         findNavController().navigate(
-            MarvelCharacterListFragmentDirections.actionToCharacterDetail(character)
+            MarvelCharacterListFragmentDirections.actionToCharacterDetail(character),
+            FragmentNavigatorExtras(view to character.image)
         )
     }
 

@@ -10,7 +10,7 @@ import com.mreigosa.marvelapp.presentation.databinding.ItemLoadingBinding
 import com.mreigosa.marvelapp.presentation.databinding.ItemMarvelCharacterBinding
 
 class MarvelCharacterAdapter(
-    private val listener: (MarvelCharacter) -> Unit
+    private val listener: (MarvelCharacter, View) -> Unit
 ) : ListAdapter<MarvelCharacterListItem, MarvelCharacterViewHolder>(
     MarvelCharacterListItemDiffCallback
 ) {
@@ -43,7 +43,7 @@ class MarvelCharacterAdapter(
     fun showLoading() {
         if (!isLoading) {
             isLoading = true
-            currentList.toMutableList().add(MarvelCharacterListItem.LoadingItem)
+
             val newList = currentList.toMutableList()
             newList.add(itemCount, MarvelCharacterListItem.LoadingItem)
             submitList(newList)

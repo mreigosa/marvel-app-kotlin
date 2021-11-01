@@ -13,14 +13,16 @@ sealed class MarvelCharacterViewHolder(itemView: View) : RecyclerView.ViewHolder
         private val binding: ItemMarvelCharacterBinding
     ) : MarvelCharacterViewHolder(binding.root) {
 
-        fun bind(character: MarvelCharacter, listener: (MarvelCharacter) -> Unit) {
+        fun bind(character: MarvelCharacter, listener: (MarvelCharacter, View) -> Unit) {
             binding.itemCharacterName.text = character.name
             Glide.with(binding.root)
                 .load(character.image)
                 .into(binding.itemCharacterImage)
 
+            binding.itemCharacterImage.transitionName = character.image
+
             binding.root.setOnClickListener {
-                listener(character)
+                listener(character, binding.itemCharacterImage)
             }
         }
     }
