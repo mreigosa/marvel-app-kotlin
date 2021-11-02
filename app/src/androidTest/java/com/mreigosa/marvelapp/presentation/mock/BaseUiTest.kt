@@ -55,4 +55,9 @@ abstract class BaseUiTest : KoinTest {
         coEvery { charactersUseCase.run() } returns Result.failure(Throwable())
         coEvery { charactersUseCase withParams any() } returns charactersUseCase
     }
+
+    protected fun givenEmptyCharactersRetrieved() {
+        coEvery { charactersUseCase.run() } returns Result.success(listOf())
+        coEvery { charactersUseCase withParams any() } returns charactersUseCase
+    }
 }

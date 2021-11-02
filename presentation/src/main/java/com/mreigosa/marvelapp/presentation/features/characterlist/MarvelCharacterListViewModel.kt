@@ -16,7 +16,7 @@ class MarvelCharacterListViewModel(
     private val _viewState = MutableLiveData<CharacterListViewState>()
     val viewState: LiveData<CharacterListViewState> = _viewState
 
-    private val characterList: MutableList<MarvelCharacter> =  mutableListOf()
+    private val characterList: MutableList<MarvelCharacter> = mutableListOf()
 
     init {
         _viewState.value = CharacterListViewState.FirstLoading
@@ -29,15 +29,19 @@ class MarvelCharacterListViewModel(
             getCharactersUseCase withParams GetCharactersUseCase.Params(offset)
         ) { result ->
             result.fold(
-                onSuccess = ::onCharactersRetrieved,
+                onSuccess = { characters -> onCharactersRetrieved(offset, characters) },
                 onFailure = ::onError
             )
         }
     }
 
-    private fun onCharactersRetrieved(characters: List<MarvelCharacter>) {
-        characterList.addAll(characters)
-        _viewState.value = CharacterListViewState.CharacterListLoaded(characterList)
+    private fun onCharactersRetrieved(offset: Int, characters: List<MarvelCharacter>) {
+        if (characters.isEmpty() && offset == 0) {
+            _viewState.value = CharacterListViewState.EmptyCharactersLoaded
+        } else {
+            characterList.addAll(characters)
+            _viewState.value = CharacterListViewState.CharacterListLoaded(characterList)
+        }
     }
 
     private fun onError(error: Throwable) {

@@ -41,4 +41,16 @@ class MarvelCharacterListFragmentTest : BaseUiTest() {
         }
     }
 
+    @Test
+    fun whenNoCharactersLoaded_EmptyViewShown() {
+        givenEmptyCharactersRetrieved()
+
+        activity.launch()
+
+        characterList {
+            screenIsShown()
+            emptyViewShown()
+            loadingIsHidden()
+        }
+    }
 }

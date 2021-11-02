@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mreigosa.marvelapp.domain.executor.Invoker
 import com.mreigosa.marvelapp.domain.executor.UseCaseInvoker
+import com.mreigosa.marvelapp.domain.model.MarvelCharacter
 import com.mreigosa.marvelapp.domain.usecase.GetCharactersUseCase
 import com.mreigosa.marvelapp.presentation.TestCoroutineRule
 import com.mreigosa.marvelapp.presentation.mock.CharacterFactory
@@ -58,7 +59,7 @@ class MarvelCharacterListViewModelTest : KoinTest {
     }
 
     @Test
-    fun `given view model, when it is created characters are retrieved`() = runBlockingTest {
+    fun `given view model, when it is created, characters are retrieved`() = runBlockingTest {
         val mockCharacters = CharacterFactory.createMany(20)
 
         coEvery { charactersUseCase.run()} returns Result.success(mockCharacters)
@@ -96,6 +97,48 @@ class MarvelCharacterListViewModelTest : KoinTest {
 
         sut.viewState.observeForTesting {
             viewStateObserver.onChanged(CharacterListViewState.CharacterListLoaded(mockCharacters))
+        }
+    }
+
+    @Test
+    fun `given characters loaded, when load characters more, no characters are retrieved`() = runBlockingTest {
+        val mockCharacters = listOf<MarvelCharacter>()
+
+        coEvery { charactersUseCase.run()} returns Result.success(mockCharacters)
+        coEvery { charactersUseCase withParams any() } returns charactersUseCase
+
+        val viewStateObserver = mockk<Observer<CharacterListViewState>>(relaxed = true)
+
+        sut = MarvelCharacterListViewModel(charactersUseCase, get())
+        sut.fetchCharacters(20)
+
+        coVerify {
+            charactersUseCase.run()
+        }
+
+        sut.viewState.observeForTesting {
+            viewStateObserver.onChanged(CharacterListViewState.CharacterListLoaded(mockCharacters))
+        }
+    }
+
+    @Test
+    fun `given view model, when load characters, no characters are retrieved`() = runBlockingTest {
+        val mockCharacters = listOf<MarvelCharacter>()
+
+        coEvery { charactersUseCase.run()} returns Result.success(mockCharacters)
+        coEvery { charactersUseCase withParams any() } returns charactersUseCase
+
+        val viewStateObserver = mockk<Observer<CharacterListViewState>>(relaxed = true)
+
+        sut = MarvelCharacterListViewModel(charactersUseCase, get())
+        sut.fetchCharacters(0)
+
+        coVerify {
+            charactersUseCase.run()
+        }
+
+        sut.viewState.observeForTesting {
+            viewStateObserver.onChanged(CharacterListViewState.EmptyCharactersLoaded)
         }
     }
 

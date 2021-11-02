@@ -76,6 +76,7 @@ class MarvelCharacterListFragment : Fragment() {
                 CharacterListViewState.FirstLoading -> showLoading()
                 CharacterListViewState.Error -> showError()
                 is CharacterListViewState.CharacterListLoaded -> onCharactersLoaded(it.characters)
+                is CharacterListViewState.EmptyCharactersLoaded -> showEmptyView()
             }
         }
     }
@@ -90,6 +91,7 @@ class MarvelCharacterListFragment : Fragment() {
 
     private fun onCharactersLoaded(characters: List<MarvelCharacter>) {
         hideLoading()
+        binding.emptyDataView.isGone = true
         endlessScrollListener.setLoaded()
         charactersAdapter.setItems(characters)
     }
@@ -97,6 +99,11 @@ class MarvelCharacterListFragment : Fragment() {
     private fun showError() {
         hideLoading()
         showSnackBar(getString(R.string.something_went_wrong))
+    }
+
+    private fun showEmptyView(){
+        binding.emptyDataView.isVisible = true
+        hideLoading()
     }
 
     private fun onCharacterSelected(character: MarvelCharacter, view: View) {

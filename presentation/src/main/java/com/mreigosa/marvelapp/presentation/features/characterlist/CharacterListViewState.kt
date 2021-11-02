@@ -6,4 +6,5 @@ sealed class CharacterListViewState {
     object FirstLoading : CharacterListViewState()
     object Error : CharacterListViewState()
     data class CharacterListLoaded(val characters: List<MarvelCharacter>) : CharacterListViewState()
+    object EmptyCharactersLoaded : CharacterListViewState()
 }
