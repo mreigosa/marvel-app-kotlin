@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.mreigosa.marvelapp.domain.model.MarvelCharacter
+import com.mreigosa.marvelapp.presentation.R
 import com.mreigosa.marvelapp.presentation.databinding.FragmentMarvelCharacterListBinding
 import com.mreigosa.marvelapp.presentation.util.EndlessScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -95,7 +96,7 @@ class MarvelCharacterListFragment : Fragment() {
 
     private fun showError() {
         hideLoading()
-        showSnackBar("Something went wrong")
+        showSnackBar(getString(R.string.something_went_wrong))
     }
 
     private fun onCharacterSelected(character: MarvelCharacter, view: View) {
