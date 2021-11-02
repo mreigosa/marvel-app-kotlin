@@ -13,7 +13,7 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.mreigosa.marvelapp.runner.EspressoRunner"
     }
 
     buildTypes {
@@ -29,6 +29,15 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    testOptions {
+        animationsDisabled = true
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.test:monitor:1.4.0'
+        }
+    }
 }
 
 dependencies {
@@ -42,11 +51,21 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
     implementation "io.insert-koin:koin-android:$koin_version"
 
     testImplementation 'junit:junit:4.+'
+    androidTestImplementation "io.mockk:mockk-android:$mockk_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_version"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "io.insert-koin:koin-test:$koin_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation 'pl.droidsonroids.testing:mockwebserver-path-dispatcher:1.1.3'
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation("com.adevinta.android:barista:$barista_version") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
 
-
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }
